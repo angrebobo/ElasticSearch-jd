@@ -21,10 +21,10 @@ public class ContentController {
     @Autowired
     private ContentService contentService;
 
-//    @GetMapping("/parse/{key}")
-//    public boolean parse(@PathVariable("key") String key) throws IOException {
-//        return contentService.parseContent(key);
-//    }
+    /*@GetMapping("/parse/{key}")
+    public boolean parse(@PathVariable("key") String key) throws IOException {
+        return contentService.parseContent(key);
+    }*/
 
 
     @GetMapping("/search/{key}/{pageNumber}/{pageSize}")
@@ -34,14 +34,13 @@ public class ContentController {
         return contentService.searchContent(key, pageNumber, pageSize);
     }
 
-//    @GetMapping("/create/{key}")
-//    public void create(@PathVariable("key") String key){
-//        contentService.createIndex(key);
-//    }
-//
-//    @GetMapping("/delete/{key}")
-//    public void delete(@PathVariable("key") String key){
-//        contentService.deleteIndex(key);
-//    }
+    /*@GetMapping("/create/{key}")
+    public void create(@PathVariable("key") String key){
+        contentService.createIndex(key);
+    }*/
 
+    /*@GetMapping("/delete/{key}")
+    public void delete(@PathVariable("key") String key){
+        contentService.deleteIndex(key);
+    }*/
 }

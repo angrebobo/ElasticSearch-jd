@@ -80,10 +80,6 @@ public class ContentService {
      * @return
      */
     public boolean createIndex(String index){
-        if( isIndexExist(index) ) {
-            deleteIndex(index);
-        }
-
         CreateIndexRequest request = new CreateIndexRequest(index);
         request.settings(Settings.builder()
                 //设置分片数
@@ -93,19 +89,7 @@ public class ContentService {
                 .build());
         request.setTimeout(TimeValue.timeValueSeconds(2));
         request.mapping(
-                "{\n" +
-                        "  \"properties\": {\n" +
-                        "    \"title\": {\n" +
-                        "      \"type\": \"text\"\n" +
-                        "    },\n" +
-                        "    \"price\": {\n" +
-                        "      \"type\": \"text\"\n" +
-                        "    },\n" +
-                        "    \"img\": {\n" +
-                        "      \"type\": \"text\"\n" +
-                        "    },\n" +
-                        "  }\n" +
-                        "}",
+                "{\"properties\":{\"title\":{\"type\":\"text\"},\"price\":{\"type\":\"text\"},\"img\":{\"type\":\"text\"}}}",
                 XContentType.JSON);
 
         try {
@@ -147,7 +131,7 @@ public class ContentService {
     }
 
     /**
-     * 分页搜索
+     * 分页搜索，高亮显示
      * @param key 关键字
      * @param pageNumber 页面编号
      * @param pageSize 页面大小
@@ -158,9 +142,14 @@ public class ContentService {
             pageNumber = 1;
         }
 
+        //当索引不存在时，创建索引
+        if( !isIndexExist("jd_goods") ){
+            createIndex("jd_goods");
+        }
+
         parseContent(key);
 
-        Thread.sleep(100);
+        Thread.sleep(300);
 
         //ES索引名称
         String index = "jd_goods";
